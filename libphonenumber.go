@@ -23,10 +23,13 @@ func (p *LibPhoneNumber) InitPlugin(messenger plugin.BinaryMessenger) error {
 
 func handleisValidPhoneNumber(arguments interface{}) (reply interface{}, err error) {
 	argsMap := arguments.(map[interface{}]interface{})
-	phone_number := argsMap["phone_number"].(string)
-	iso_code := argsMap["iso_code"].(string)
+	phoneNumber := argsMap["phone_number"].(string)
+	isoCode := argsMap["iso_code"].(string)
 
-	p, err := libphonenumber.Parse(phone_number, strings.ToUpper(iso_code))
+	println(phoneNumber)
+	println(isoCode)
+
+	p, err := libphonenumber.Parse(phoneNumber, strings.ToUpper(isoCode))
 	if err != nil {
 		log.Fatal(err)
 		return false, err
