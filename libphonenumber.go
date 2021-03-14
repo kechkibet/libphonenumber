@@ -31,14 +31,10 @@ func handleisValidPhoneNumber(arguments interface{}) (reply interface{}, err err
 
 	p, err := libphonenumber.Parse(phoneNumber, strings.ToUpper(isoCode))
 	if err != nil {
-		println("We have an error:")
-		log.Print(err)
+		log.Println(err)
 		return false, nil
 	}
-	println("After parse")
 	isValid := libphonenumber.IsValidNumber(p)
-
-	println("Is Valid: %s", isValid)
 	return isValid, err
 }
 
