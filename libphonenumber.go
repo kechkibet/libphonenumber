@@ -33,7 +33,7 @@ func handleisValidPhoneNumber(arguments interface{}) (reply interface{}, err err
 	if err != nil {
 		println("We have an error:")
 		log.Fatal(err)
-		return false, err
+		return false, nil
 	}
 	println("After parse")
 	isValid := libphonenumber.IsValidNumber(p)
