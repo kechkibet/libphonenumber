@@ -34,7 +34,11 @@ func handleisValidPhoneNumber(arguments interface{}) (reply interface{}, err err
 		log.Fatal(err)
 		return false, err
 	}
-	return libphonenumber.IsValidNumber(p), err
+	isValid := libphonenumber.IsValidNumber(p)
+
+	println(isValid)
+
+	return isValid, err
 }
 
 func handleisNormalizePhoneNumber(arguments interface{}) (reply interface{}, err error) {
