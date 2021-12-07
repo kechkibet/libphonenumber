@@ -1,6 +1,7 @@
 package libphonenumber
 
 import (
+	"fmt"
 	"github.com/go-flutter-desktop/go-flutter"
 	"github.com/go-flutter-desktop/go-flutter/plugin"
 	"github.com/ttacon/libphonenumber"
@@ -18,7 +19,28 @@ func (p *LibPhoneNumber) InitPlugin(messenger plugin.BinaryMessenger) error {
 	channel := plugin.NewMethodChannel(messenger, channelName, plugin.StandardMethodCodec{})
 	channel.HandleFunc("isValidPhoneNumber", handleisValidPhoneNumber)
 	channel.HandleFunc("normalizePhoneNumber", handleisNormalizePhoneNumber)
+	channel.HandleFunc("getRegionInfo", handleGetRegionInfo)
 	return nil // no error
+}
+
+func handleGetRegionInfo(arguments interface{}) (reply interface{}, err error) {
+	argsMap := arguments.(map[interface{}]interface{})
+	phoneNumber := argsMap["phone_number"].(string)
+	isoCode := argsMap["iso_code"].(string)
+
+	p, err := libphonenumber.Parse(phoneNumber, strings.ToUpper(isoCode))
+
+	regionCode := libphonenumber.GetRegionCodeForNumber(p)
+	countryCode := p.CountryCode
+	formattedNumber := libphonenumber.Format(p,libphonenumber.NATIONAL)
+
+	ret := map[string]string
+	ret["regionCode"] = regionCode
+	ret["countryCode"] = fmt.Sprintf("%d",countryCode)
+	ret["formattedNumber"] = formattedNumber
+
+	return ret, nil
+
 }
 
 func handleisValidPhoneNumber(arguments interface{}) (reply interface{}, err error) {
