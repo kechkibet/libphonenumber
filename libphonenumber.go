@@ -32,11 +32,11 @@ func handleGetRegionInfo(arguments interface{}) (reply interface{}, err error) {
 
 	regionCode := libphonenumber.GetRegionCodeForNumber(p)
 	countryCode := p.CountryCode
-	formattedNumber := libphonenumber.Format(p,libphonenumber.NATIONAL)
+	formattedNumber := libphonenumber.Format(p, libphonenumber.NATIONAL)
 
-	ret := map[string]string
+	ret := make(map[string]string)
 	ret["regionCode"] = regionCode
-	ret["countryCode"] = fmt.Sprintf("%d",countryCode)
+	ret["countryCode"] = fmt.Sprintf("%d", countryCode)
 	ret["formattedNumber"] = formattedNumber
 
 	return ret, nil
